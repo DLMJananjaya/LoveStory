@@ -317,14 +317,21 @@
             </div>
     </div>
 
-    <button class="subscribe-btn" onclick="downloadCalendarReminders()">
-        🔔 Subscribe to Reminders
-    </button>
+    <div class="subscribe-container" style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-bottom: 60px; z-index: 10;">
+        <input type="email" id="subEmail" placeholder="Enter your email" required style="padding: 15px 25px; border-radius: 30px; border: 2px solid rgba(216, 27, 96, 0.5); font-size: 1.1em; width: 250px; text-align: center; outline: none; background: rgba(255, 255, 255, 0.8);">
+        
+        <button class="subscribe-btn" onclick="subscribeEmail()" id="subBtn" style="background: linear-gradient(45deg, #d81b60, #ff6699); color: white; border: none; padding: 15px 30px; font-size: 1.2em; font-family: inherit; font-weight: bold; border-radius: 30px; cursor: pointer; box-shadow: 0 8px 20px rgba(216, 27, 96, 0.4); transition: all 0.3s ease;">
+            💌 Subscribe to Emails
+        </button>
+        <div id="subMessage" style="font-weight: bold; color: #d81b60; display: none;"></div>
+    </div>
 
     <div class="lace-border lace-bottom"></div>
 
     <script>
         const YOUR_START_DATE = '2022-11-16'; 
+        // PASTE YOUR GOOGLE SCRIPT WEB APP URL HERE:
+        const GOOGLE_SCRIPT_URL = 'YOUR_WEB_APP_URL_FROM_STEP_2'; 
 
         function calculateExactDuration() {
             const startDate = new Date(YOUR_START_DATE);
@@ -349,86 +356,65 @@
             }
 
             document.getElementById('time-results').innerHTML = `
-                <div class="time-block">
-                    <span class="time-number">${years}</span>
-                    <span class="time-label">Years</span>
-                </div>
-                <div class="time-block">
-                    <span class="time-number">${months}</span>
-                    <span class="time-label">Months</span>
-                </div>
-                <div class="time-block">
-                    <span class="time-number">${days}</span>
-                    <span class="time-label">Days</span>
-                </div>
+                <div class="time-block"><span class="time-number">${years}</span><span class="time-label">Years</span></div>
+                <div class="time-block"><span class="time-number">${months}</span><span class="time-label">Months</span></div>
+                <div class="time-block"><span class="time-number">${days}</span><span class="time-label">Days</span></div>
             `;
 
-            if (startDate.getMonth() === today.getMonth() && 
-                startDate.getDate() === today.getDate() && 
-                startDate.getFullYear() !== today.getFullYear()) {
+            if (startDate.getMonth() === today.getMonth() && startDate.getDate() === today.getDate() && startDate.getFullYear() !== today.getFullYear()) {
                 triggerAnniversary();
             }
         }
 
         function triggerAnniversary() {
-            for (let i = 0; i < 100; i++) {
-                setTimeout(createHeart, i * 80); 
-            }
+            for (let i = 0; i < 100; i++) { setTimeout(createHeart, i * 80); }
         }
 
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
-            
             const hearts = ['❤️', '💖', '💕', '✨', '💗', '💘'];
             heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-            
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.fontSize = (Math.random() * 40 + 20) + 'px';
             const duration = Math.random() * 4 + 4; 
             heart.style.animationDuration = duration + 's'; 
-
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), duration * 1000);
         }
 
-        // ==========================================
-        //  Calendar Reminder Generator Function
-        // ==========================================
-        function downloadCalendarReminders() {
-            // This creates a repeating event for the 16th of every month
-            const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Our Story of Love//EN
-CALSCALE:GREGORIAN
-BEGIN:VEVENT
-SUMMARY:❤️ Mensiversary! (Jananjaya & Sulakshana)
-RRULE:FREQ=MONTHLY;BYMONTHDAY=16
-DTSTART:20221116T040000Z
-DTEND:20221116T050000Z
-DESCRIPTION:Celebrating another beautiful month together! Check our website to see the exact time.
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:🎉 Happy Anniversary! (Jananjaya & Sulakshana)
-RRULE:FREQ=YEARLY;BYMONTH=11;BYMONTHDAY=16
-DTSTART:20221116T040000Z
-DTEND:20221116T050000Z
-DESCRIPTION:Happy Anniversary! Time to celebrate!
-END:VEVENT
-END:VCALENDAR`;
+        // --- NEW EMAIL SUBSCRIPTION FUNCTION ---
+        function subscribeEmail() {
+            const emailInput = document.getElementById('subEmail').value;
+            const msgBox = document.getElementById('subMessage');
+            const btn = document.getElementById('subBtn');
 
-            // Create a downloadable file in the browser
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Love_Story_Reminders.ics';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            
-            alert("Calendar reminders downloaded! 💌 Open the downloaded file to automatically add the 16th of every month to your phone's calendar.");
+            if(!emailInput || !emailInput.includes('@')) {
+                msgBox.innerText = "Please enter a valid email!";
+                msgBox.style.display = "block";
+                return;
+            }
+
+            // Visual feedback while loading
+            btn.innerText = "⏳ Subscribing...";
+            btn.style.opacity = "0.7";
+
+            // Send data to Google Script
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Required to bypass CORS blocks from Google
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ 'email': emailInput })
+            }).then(() => {
+                btn.innerText = "✅ Subscribed!";
+                msgBox.innerText = "Check your email for a confirmation!";
+                msgBox.style.display = "block";
+                document.getElementById('subEmail').value = ""; // clear input
+            }).catch(error => {
+                btn.innerText = "💌 Subscribe to Emails";
+                msgBox.innerText = "Error. Please try again.";
+                msgBox.style.display = "block";
+            });
         }
 
         window.onload = calculateExactDuration;
