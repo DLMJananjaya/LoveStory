@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story of Love</title>
+    <style>
+        /* Dreamy Animated Background */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #ffb6c1, #ffdde1, #ff99ac, #ffe4e1);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            font-family: 'Century Gothic', 'Arial', sans-serif;
+            color: #7a1f3d;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Top and Bottom Decorative Lace */
+        .lace-border {
+            width: 100%;
+            height: 25px;
+            background-image: radial-gradient(circle at 12px 0, transparent 12px, rgba(212, 91, 122, 0.6) 13px);
+            background-size: 24px 24px;
+            background-repeat: repeat-x;
+        }
+        .lace-bottom {
+            background-image: radial-gradient(circle at 12px 24px, transparent 12px, rgba(212, 91, 122, 0.6) 13px);
+            position: fixed;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        /* Glowing Header Text */
+        .header {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .header h1 {
+            font-size: 4em;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px #ff6699;
+            margin: 0;
+            font-weight: normal;
+            letter-spacing: 4px;
+        }
+        .header p {
+            font-size: 1.4em;
+            margin: 0 0 40px 0;
+            letter-spacing: 3px;
+            color: #a32a52;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Main Glassmorphism Display */
+        .main-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* Cute Character Profile Cards */
+        .profile {
+            width: 140px;
+            height: 280px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .profile:hover {
+            transform: translateY(-15px) scale(1.05);
+        }
+
+        /* The Big Center Heart Container */
+        .center-heart-container {
+            width: 420px;
+            height: 360px;
+            background: radial-gradient(circle, rgba(240, 80, 120, 0.75) 0%, rgba(200, 50, 100, 0.55) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50px 50px 180px 180px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 25px 50px rgba(122, 31, 61, 0.4), inset 0 0 30px rgba(255,255,255,0.4);
+            color: #ffffff;
+            position: relative;
+            text-align: center;
+        }
+        
+        .center-heart-container h2 {
+            margin: 5px 0;
+            font-size: 2.2em;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+
+        /* 💖 THE BEAUTIFUL BEATING HEART 💖 */
+        .beating-heart {
+            font-size: 85px;
+            color: #ffb3c6;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 60px #ff1a53;
+            margin: 15px 0;
+            animation: heartbeat 1.2s infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 51, 102, 0.8));
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.3); }
+            75% { transform: scale(1); }
+        }
+
+        .subtext {
+            font-size: 1.1em;
+            border: 2px dashed rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 8px 25px;
+            background: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Fixed Duration Display (Years, Months, Days) */
+        .duration-display {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            padding: 30px 50px;
+            border-radius: 30px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.2);
+            z-index: 10;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+        .duration-display h3 {
+            margin: 0 0 20px 0;
+            color: #a32a52;
+            font-weight: bold;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+        }
+        .time-values {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        /* Individual Time Widgets */
+        .time-block {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 25px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(163, 42, 82, 0.2);
+            min-width: 80px;
+        }
+        .time-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #d81b60;
+            line-height: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .time-label {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #7a1f3d;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* Subscribe Button */
+        .subscribe-btn {
+            background: linear-gradient(45deg, #d81b60, #ff6699);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 60px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .subscribe-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(216, 27, 96, 0.6);
+        }
+
+        /* Floating Hearts Animation for Anniversary */
+        .floating-heart {
+            position: fixed;
+            bottom: -50px;
+            z-index: 1000;
+            pointer-events: none;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) scale(1.8) rotate(360deg); opacity: 0; }
+        }
+
+        /* =========================================
+           MOBILE RESPONSIVENESS (Media Queries)
+           ========================================= */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.8em; }
+            .header p { font-size: 1.1em; margin-bottom: 20px;}
+            
+            .main-display { gap: 20px; flex-direction: column; }
+            
+            /* Hide the tall profile pill on mobile to save space, just show the circle image */
+            .profile { 
+                width: 100px; 
+                height: 100px; 
+                border-radius: 50%; 
+                background: none; 
+                border: none; 
+                box-shadow: none; 
+            }
+            .profile img { width: 100px !important; height: 100px !important; }
+
+            .center-heart-container {
+                width: 90%;
+                max-width: 340px;
+                height: 300px;
+                border-radius: 40px 40px 140px 140px;
+            }
+            .center-heart-container h2 { font-size: 1.8em; }
+            .beating-heart { font-size: 60px; margin: 10px 0;}
+
+            .duration-display {
+                width: 90%;
+                padding: 20px 15px;
+            }
+            .duration-display h3 { font-size: 1.2em; }
+            .time-values { gap: 10px; }
+            .time-block { padding: 10px 15px; min-width: 60px; }
+            .time-number { font-size: 2em; }
+            .time-label { font-size: 0.7em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lace-border"></div>
+
+    <div class="header">
+        <h1>you & me</h1>
+        <p>forever together</p>
+    </div>
+
+    <div class="main-display">
+        <div class="profile">
+            <img src="https://scontent.fcmb1-2.fna.fbcdn.net/v/t39.30808-6/655422440_1611605019926287_2300793865619924754_n.webp?stp=dst-jpg_s590x590_tt6&_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeFk2vVU-hVtq5Eof8M9L6KyBq1NOUcVpuQGrU05RxWm5C7T0pHmsqNhYrfi6rXTFrUlxTILcnWEexONSsG-iE82&_nc_ohc=aJHciWECDeIQ7kNvwHeRSJP&_nc_oc=Adqwfm28w4Gd0qAI70wYoUeWgVXMG0wNVhjMchIAFm7Ut1YkxtpWH1-8kEy-4ipuNlk&_nc_zt=23&_nc_ht=scontent.fcmb1-2.fna&_nc_gid=XxvAw5FiqtCw-xkDn28nDQ&oh=00_Af06nLOS3VMPPxhnE6QzkoEwFpSONNPR8m2zZfA9sJxM2Q&oe=69F166B0" alt="Jananjaya" style="width: 80px; height: 80px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.2); object-fit: cover;">
+        </div>
+
+        <div class="center-heart-container">
+            <h2>JANANJAYA</h2>
+            <h2>&</h2>
+            <h2>SULAKSHANA</h2>
+
+            <div class="beating-heart">💗</div>
+
+            <!-- <div class="subtext">
+                Better Together
+            </div> -->
+        </div>
+
+        <div class="profile">
+            <img src="https://p16-common-sign.tiktokcdn.com/tos-alisg-avt-0068/bc4729e3f88792f4722cfbb52fa7e6f4~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=4ecf58f6&x-expires=1777212000&x-signature=UPRTD8%2BNa4wCZEs4u8uWuhERiKw%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my" alt="Sulakshana" style="width: 80px; height: 80px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.2); object-fit: cover;">
+        </div>
+    </div>
+
+    <div class="duration-display">
+        <h3>We have been beautifully together for</h3>
+        <div class="time-values" id="time-results">
+            </div>
+    </div>
+
+    <button class="subscribe-btn" onclick="downloadCalendarReminders()">
+        🔔 Subscribe to Reminders
+    </button>
+
+    <div class="lace-border lace-bottom"></div>
+
+    <script>
+        const YOUR_START_DATE = '2022-11-16'; 
+
+        function calculateExactDuration() {
+            const startDate = new Date(YOUR_START_DATE);
+            const today = new Date();
+
+            startDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+
+            let years = today.getFullYear() - startDate.getFullYear();
+            let months = today.getMonth() - startDate.getMonth();
+            let days = today.getDate() - startDate.getDate();
+
+            if (days < 0) {
+                months--;
+                const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += previousMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            document.getElementById('time-results').innerHTML = `
+                <div class="time-block">
+                    <span class="time-number">${years}</span>
+                    <span class="time-label">Years</span>
+                </div>
+                <div class="time-block">
+                    <span class="time-number">${months}</span>
+                    <span class="time-label">Months</span>
+                </div>
+                <div class="time-block">
+                    <span class="time-number">${days}</span>
+                    <span class="time-label">Days</span>
+                </div>
+            `;
+
+            if (startDate.getMonth() === today.getMonth() && 
+                startDate.getDate() === today.getDate() && 
+                startDate.getFullYear() !== today.getFullYear()) {
+                triggerAnniversary();
+            }
+        }
+
+        function triggerAnniversary() {
+            for (let i = 0; i < 100; i++) {
+                setTimeout(createHeart, i * 80); 
+            }
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            
+            const hearts = ['❤️', '💖', '💕', '✨', '💗', '💘'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 40 + 20) + 'px';
+            const duration = Math.random() * 4 + 4; 
+            heart.style.animationDuration = duration + 's'; 
+
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), duration * 1000);
+        }
+
+        // ==========================================
+        //  Calendar Reminder Generator Function
+        // ==========================================
+        function downloadCalendarReminders() {
+            // This creates a repeating event for the 16th of every month
+            const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Our Story of Love//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+SUMMARY:❤️ Mensiversary! (Jananjaya & Sulakshana)
+RRULE:FREQ=MONTHLY;BYMONTHDAY=16
+DTSTART:20221116T040000Z
+DTEND:20221116T050000Z
+DESCRIPTION:Celebrating another beautiful month together! Check our website to see the exact time.
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:🎉 Happy Anniversary! (Jananjaya & Sulakshana)
+RRULE:FREQ=YEARLY;BYMONTH=11;BYMONTHDAY=16
+DTSTART:20221116T040000Z
+DTEND:20221116T050000Z
+DESCRIPTION:Happy Anniversary! Time to celebrate!
+END:VEVENT
+END:VCALENDAR`;
+
+            // Create a downloadable file in the browser
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Love_Story_Reminders.ics';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            alert("Calendar reminders downloaded! 💌 Open the downloaded file to automatically add the 16th of every month to your phone's calendar.");
+        }
+
+        window.onload = calculateExactDuration;
+    </script>
+</body>
+</html>
